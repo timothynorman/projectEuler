@@ -32,15 +32,47 @@ public class Question11 {
 				+ "20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54\r\n"
 				+ "01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48";
 		final int SEARCH_LENGTH = 4;
+		int greatestProduct = 0;
 		
 		ArrayList<ArrayList<Integer>> grid = createGrid(input);
 		
-		System.out.println(checkRight(17, 0, grid, SEARCH_LENGTH));
-		System.out.println(checkDown(17, 16, grid, SEARCH_LENGTH));
-		System.out.println(checkDownRight(0, 0, grid, SEARCH_LENGTH));
-		System.out.println(checkDownLeft(3, 0, grid, SEARCH_LENGTH));
+		/**
+		 * Algorithm to systematically work through the grid and apply the four 
+		 * directional checks and save the largest prodcut found. 
+		 */
+		for(int y = 0; y < grid.size() - 1; y++) {
+			for(int x = 0; x < grid.get(y).size() - 1; x++) {
+				int right = checkRight(x, y, grid, SEARCH_LENGTH);
+				int down = checkDown(x, y, grid, SEARCH_LENGTH);
+				int downRight = checkDownRight(x, y, grid, SEARCH_LENGTH);
+				int downLeft = checkDownLeft(x, y, grid, SEARCH_LENGTH);
+				
+				if(right > greatestProduct) {
+					greatestProduct = right;
+				}
+				if(down > greatestProduct) {
+					greatestProduct = down;
+				}
+				if(downRight > greatestProduct) {
+					greatestProduct = downRight;
+				}
+				if(downLeft > greatestProduct) {
+					greatestProduct = downLeft;
+				}
+			}
+		}
+		System.out.println(greatestProduct);
 	}
 	
+	/**
+	 * Method to search in the horizontal direction starting at coordinate x, y and 
+	 * moving rightward. 
+	 * @param x The x array position on the grid.
+	 * @param y The y array position on the grid. 
+	 * @param grid The 2D grid of integers to search. 
+	 * @param searchLength The number of consecutive elements to search. 
+	 * @return The product of the elements in the search pattern. 
+	 */
 	private static int checkRight(int x, int y, ArrayList<ArrayList<Integer>> grid, int searchLength) {
 		int product = 1;
 		if(x < grid.get(0).size() -1 - searchLength) {
@@ -52,6 +84,15 @@ public class Question11 {
 		return product = 0;
 	}
 	
+	/**
+	 * Method to search in the vertical direction starting at coordinate x, y and 
+	 * moving downward. 
+	 * @param x The x array position on the grid.
+	 * @param y The y array position on the grid. 
+	 * @param grid The 2D grid of integers to search. 
+	 * @param searchLength The number of consecutive elements to search. 
+	 * @return The product of the elements in the search pattern. 
+	 */
 	private static int checkDown(int x, int y, ArrayList<ArrayList<Integer>> grid, int searchLength) {
 		int product = 1;
 		if(y < grid.size() -1 - searchLength) {
@@ -63,6 +104,15 @@ public class Question11 {
 		return product = 0;
 	}
 	
+	/**
+	 * Method to search in the south-east direction starting at coordinate x, y and 
+	 * moving downward and to the right. 
+	 * @param x The x array position on the grid.
+	 * @param y The y array position on the grid. 
+	 * @param grid The 2D grid of integers to search. 
+	 * @param searchLength The number of consecutive elements to search. 
+	 * @return The product of the elements in the search pattern. 
+	 */
 	private static int checkDownRight(int x, int y, ArrayList<ArrayList<Integer>> grid, int searchLength) {
 		int product = 1;
 		if(x < grid.get(0).size() - 1 - searchLength && y < grid.size() -1 - searchLength) {
@@ -74,6 +124,15 @@ public class Question11 {
 		return product = 0;
 	}
 	
+	/**
+	 * Method to search in the south-west direction starting at coordinate x, y and 
+	 * moving downward and to the left. 
+	 * @param x The x array position on the grid.
+	 * @param y The y array position on the grid. 
+	 * @param grid The 2D grid of integers to search. 
+	 * @param searchLength The number of consecutive elements to search. 
+	 * @return The product of the elements in the search pattern. 
+	 */
 	private static int checkDownLeft(int x, int y, ArrayList<ArrayList<Integer>> grid, int searchLength) {
 		int product = 1;
 		if(x >= searchLength -1 && y < grid.size() -1 - searchLength) {
@@ -85,6 +144,11 @@ public class Question11 {
 		return product = 0;
 	}
 
+	/**
+	 * A method of taking a string of integers and converting it into a 2D array. 
+	 * @param input The string of numbers to be converted. 
+	 * @return A 2D ArrayList matrix of integers representing the original string. 
+	 */
 	private static ArrayList<ArrayList<Integer>> createGrid(String input) {
 		ArrayList<ArrayList<Integer>> matrix = new ArrayList<>();
 		for(String row : splitIntoRows(input)) {
@@ -93,6 +157,11 @@ public class Question11 {
 		return matrix;
 	}
 
+	/**
+	 * A method to split a string into rows based on line-break characters.
+	 * @param input A string representing multiple lines of text. 
+	 * @return An ArrayList of integers. 
+	 */
 	private static ArrayList<String> splitIntoRows(String input){
 		ArrayList<String> matrix = new ArrayList<>();
 		String[] stringArray = input.split("\\r\\n");
@@ -101,6 +170,13 @@ public class Question11 {
 		}
 		return matrix;
 	}
+	
+	/**
+	 * A method to convert a string of numbers separated by spaces into an ArrayString 
+	 * of integers. 
+	 * @param input A string of numbers separated by spaces. 
+	 * @return An ArrayString of integers. 
+	 */
 	private static ArrayList<Integer> stringToInt(String input) {
 		ArrayList<Integer> intArray = new ArrayList<>();
 		String[] stringArray = input.split(" ");
