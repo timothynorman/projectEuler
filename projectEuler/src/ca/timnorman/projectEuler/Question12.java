@@ -6,7 +6,6 @@
 
 package ca.timnorman.projectEuler;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Question12 {
