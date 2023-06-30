@@ -51,10 +51,7 @@ public class Question14 {
          * @return Returns 'true' if even, and 'false' otherwise.
          */
         private boolean isEven(BigInteger num) {
-            if (num.remainder(new BigInteger("2")).equals(new BigInteger("0"))){
-                return true;
-            }
-            else {return false;}
+            return num.remainder(new BigInteger("2")).equals(new BigInteger("0"));
         }
 
         /**
@@ -95,7 +92,7 @@ public class Question14 {
         /**
          * Method to find the number of values in a Collatz sequence between the starting value and 1.
          * @param n The starting value in the Collatz Sequence.
-         * @return The number of values in the Collatz Sequence between the starting value and 1. 
+         * @return The number of values in the Collatz Sequence between the starting value and 1.
          */
         private int collatzLength(BigInteger n){
             int length = 1;
